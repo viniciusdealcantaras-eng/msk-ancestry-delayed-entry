@@ -1,9 +1,7 @@
 # Genetic ancestry, time to sequencing and survival in MSK-IMPACT 50K and MSK-CHORD: reproducibility code
 
 Code to reproduce the numbers, tables and figures of the manuscript
-*"Ancestralidade genética, tempo até o sequenciamento tumoral e sobrevida em
-coortes de sequenciamento clínico: análise integrada do MSK-IMPACT 50K e do
-MSK-CHORD com correção para entrada tardia"*.
+*"Genetic ancestry, time to tumour sequencing and survival in clinical sequencing cohorts: an integrated analysis of MSK-IMPACT 50K and MSK-CHORD with delayed-entry correction"*.
 
 The analysis links the two public studies by the shared de-identified patient
 identifier, compares the diagnosis-to-sequencing interval across genetic
