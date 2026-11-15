@@ -1,0 +1,9 @@
+data/
+out/
+*.csv
+*.tsv
+*.txt
+!requirements.txt
+*.dta
+*.xlsx
+__pycache__/

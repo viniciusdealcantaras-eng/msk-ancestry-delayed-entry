@@ -1,0 +1,11 @@
+library(survival)
+s <- read.csv("out/surv_dx.csv"); s$anc <- relevel(factor(s$anc), ref="nonASJ-EUR")
+s <- s[complete.cases(s[,c("T","E","L","age_dx","female","anc","ct")]),]
+f <- function(m) round(exp(cbind(coef(m), confint(m)))[grep("^anc", names(coef(m))),],2)
+cat("naive\n"); print(f(coxph(Surv(T,E) ~ anc + age_dx + female + strata(ct), data=s, ties="efron")))
+cat("corrected\n"); print(f(coxph(Surv(L,T,E) ~ anc + age_dx + female + strata(ct), data=s, ties="efron")))
+k <- survfit(Surv(T,E) ~ anc, data=s); k2 <- survfit(Surv(L,T,E) ~ anc, data=s)
+print(round(cbind(naive=summary(k)$table[,"median"], corrected=summary(k2)$table[,"median"]),1))
+q <- read.csv("out/surv_seq.csv"); q$anc <- relevel(factor(q$anc), ref="nonASJ-EUR")
+cat("m1\n"); print(f(coxph(Surv(os_months_seq,E) ~ anc + age_dx + female + strata(cancer_type), data=q)))
+cat("m3\n"); print(f(coxph(Surv(os_months_seq,E) ~ anc + age_dx + female + metast + log2tmb + msih + msi_na + fga + wgd_ + mut_TP53 + mut_KRAS + mut_PIK3CA + del_CDKN2A + amp_MYC + strata(cancer_type), data=q)))
