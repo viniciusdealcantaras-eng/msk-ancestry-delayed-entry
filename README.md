@@ -47,8 +47,16 @@ Place the raw files downloaded from cBioPortal in:
 4. `Rscript figuras.R`: Figures 1 to 5 (TIFF 600 dpi, PNG and PDF) in `out/figs/`.
 5. `Rscript verificar.R`: independent check of the main Cox models and
    Kaplan-Meier medians with the `survival` package.
-6. `analise_ancestralidade.do`: independent reproduction in Stata. It reads the
-   CSV and never saves or overwrites any data file.
+6. `python analise_landmark_tau.py`: landmark analyses at 6 and 12 months with
+   delayed entry (every patient alive at the landmark, entering at the landmark
+   or at sequencing, whichever is later) next to the version restricted to
+   patients already sequenced, and the conditional Kendall's tau on all patients
+   by ancestry, by cancer type and by ancestry within cancer type, with standard
+   errors from the U-statistic projection (Supplementary Tables S3, S5 and S6).
+   Writes `out/resultados_landmark_tau.json`.
+7. `analise_ancestralidade.do`: independent reproduction in Stata, including the
+   landmark analyses with delayed entry. It reads the CSV and never saves or
+   overwrites any data file.
 
 ## Delayed entry in one line
 
