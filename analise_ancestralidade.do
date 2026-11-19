@@ -73,7 +73,7 @@ stci, by(ancestry_cat) median
 stset T, failure(E == 1) enter(time L)
 stcox ib1.ancestry_cat age_dx female, strata(ct)
 stcox ib1.ancestry_cat age_dx female stage_iv, strata(ct)
-estat phtest, detail
+* (Schoenfeld avaliado nos modelos desde o sequenciamento, secao 4, sem entrada tardia)
 sts list, by(ancestry_cat) at(60)
 stci, by(ancestry_cat) median
 
@@ -85,9 +85,16 @@ gen byte stageH_iv = chord_stage_highest == "IV"
 stcox ib1.ancestry_cat age_dx female stageH_iv, strata(ct)
 
 * landmark a 6 e 12 meses
+* todos os vivos no landmark, que entram no landmark (se ja sequenciados) ou no sequenciamento
 foreach t0 of numlist 6 12 {
+    tempvar Lt
+    gen double `Lt' = max(L, `t0')
+    stset T if T > `t0' & T > `Lt', failure(E == 1) enter(time `Lt')
+    stcox ib1.ancestry_cat age_dx female, strata(ct)
+    * versao restrita aos ja sequenciados no landmark (analise anterior)
     stset T if L <= `t0' & T > `t0', failure(E == 1) enter(time `t0')
     stcox ib1.ancestry_cat age_dx female, strata(ct)
+    drop `Lt'
 }
 
 * por tipo de cancer (africana e leste-asiatica x europeia nao asquenaze)
